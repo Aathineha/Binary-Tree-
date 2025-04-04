@@ -1,0 +1,23 @@
+package com.example.faultclient.controller;
+
+import com.example.faultclient.model.NbiFault;
+import com.example.faultclient.service.FaultService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
+
+@RestController
+@RequestMapping("/nbi-faults")
+public class FaultController {
+    private final FaultService faultService;
+
+    public FaultController(FaultService faultService) {
+        this.faultService = faultService;
+    }
+
+    @GetMapping
+    public List<NbiFault> getMappedFaults() {
+        return faultService.getMappedFaults();
+    }
+}
