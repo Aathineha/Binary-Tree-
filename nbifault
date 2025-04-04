@@ -1,0 +1,40 @@
+package com.example.faultclient.model;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public class NbiFault {
+    @JsonProperty("alarmId")
+    private String id;
+
+    @JsonProperty("affectedResource")
+    private String resource;
+
+    @JsonProperty("alarmDescription")
+    private String text;
+
+    @JsonProperty("eventTime")
+    private String timeCreated;
+
+    @JsonProperty("alarmSeverity")
+    private String severity;
+
+    @JsonProperty("alarmType")
+    private String typeId;
+
+    public NbiFault(Fault fault) {
+        this.id = fault.getId();
+        this.resource = fault.getResource();
+        this.text = fault.getText();
+        this.timeCreated = fault.getTimeCreated();
+        this.severity = fault.getSeverity();
+        this.typeId = fault.getTypeId();
+    }
+
+    // Getters
+    public String getId() { return id; }
+    public String getResource() { return resource; }
+    public String getText() { return text; }
+    public String getTimeCreated() { return timeCreated; }
+    public String getSeverity() { return severity; }
+    public String getTypeId() { return typeId; }
+}
