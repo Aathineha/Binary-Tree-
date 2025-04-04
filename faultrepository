@@ -1,0 +1,15 @@
+package com.example.faultservice.repository;
+
+import com.example.faultservice.model.Fault;
+import org.springframework.stereotype.Repository;
+import java.util.List;
+
+@Repository
+public class FaultRepository {
+    public List<Fault> getAllFaults() {
+        return List.of(
+            new Fault("1", "Router1", "Link Failure", "2025-04-04T12:00:00Z", "Critical", "LOS"),
+            new Fault("2", "Switch2", "Port Down", "2025-04-04T12:05:00Z", "Major", "OTS")
+        );
+    }
+}
