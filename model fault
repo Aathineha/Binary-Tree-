@@ -1,0 +1,39 @@
+package com.example.faultservice.model;
+
+public class Fault {
+    private String id;
+    private String resource;
+    private String text;
+    private String timeCreated;
+    private String severity;
+    private String typeId;
+
+    // Constructor
+    public Fault(String id, String resource, String text, String timeCreated, String severity, String typeId) {
+        this.id = id;
+        this.resource = resource;
+        this.text = text;
+        this.timeCreated = timeCreated;
+        this.severity = severity;
+        this.typeId = typeId;
+    }
+
+    // Getters and Setters
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
+
+    public String getResource() { return resource; }
+    public void setResource(String resource) { this.resource = resource; }
+
+    public String getText() { return text; }
+    public void setText(String text) { this.text = text; }
+
+    public String getTimeCreated() { return timeCreated; }
+    public void setTimeCreated(String timeCreated) { this.timeCreated = timeCreated; }
+
+    public String getSeverity() { return severity; }
+    public void setSeverity(String severity) { this.severity = severity; }
+
+    public String getTypeId() { return typeId; }
+    public void setTypeId(String typeId) { this.typeId = typeId; }
+}
