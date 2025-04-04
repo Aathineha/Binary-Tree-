@@ -1,0 +1,20 @@
+package com.example.faultclient.service;
+
+import com.example.faultclient.model.Fault;
+import com.example.faultclient.model.NbiFault;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+public class FaultService {
+    private final RestTemplate restTemplate = new RestTemplate();
+    private final String serviceUrl = "http://localhost:8081/faults";
+
+    public List<NbiFault> getMappedFaults() {
+        Fault[] faults = restTemplate.getForObject(serviceUrl, Fault[].class);
+        if (faults == null) return List.of();
+        return List.of(faults).stream().map(NbiFault::new).collect(Collectors.toList());
+    }
+}
