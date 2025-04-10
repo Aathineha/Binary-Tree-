@@ -1,0 +1,36 @@
+package com.example.client2.tapi;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.example.client2.model.NbiFault;
+
+import java.util.List;
+
+public class TapiNotification {
+    private String uuid;
+
+    @JsonProperty("notification-type")
+    private String notificationType = "TAPI_ALARM";
+
+    @JsonProperty("target-object")
+    private TargetObject targetObject;
+
+    private String timestamp;
+
+    @JsonProperty("additional-info")
+    private List<AdditionalInfo> additionalInfo;
+
+    public TapiNotification(NbiFault fault) {
+        this.uuid = "alarm-uuid-" + fault.getId();
+        this.targetObject = new TargetObject(fault.getNeId());
+        this.timestamp = fault.getTimeCreated();
+        this.additionalInfo = List.of(
+            new AdditionalInfo("AlarmID", fault.getId()),
+            new AdditionalInfo("Severity", fault.getSeverity()),
+            new AdditionalInfo("Type", fault.getTypeId()),
+            new AdditionalInfo("Text", fault.getText()),
+            new AdditionalInfo("Resource", fault.getResource())
+        );
+    }
+
+    // getters and setters
+}
