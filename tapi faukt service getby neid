@@ -1,0 +1,30 @@
+public List<Map<String, Object>> getMappedFaultsByNeId(String neId) {
+    Fault[] faults = restTemplate.getForObject(serviceUrl, Fault[].class);
+    if (faults == null) return List.of();
+
+    return Arrays.stream(faults)
+            .filter(f -> f.getneId() != null && f.getneId().equalsIgnoreCase(neId))
+            .map(fault -> {
+                Map<String, Object> alarm = new LinkedHashMap<>();
+                alarm.put("uuid", "alarm-uuid-" + fault.getId());
+                alarm.put("notification-type", "TAPI_ALARM");
+
+                Map<String, Object> targetObject = new LinkedHashMap<>();
+                targetObject.put("topology-uuid", "T1");
+                targetObject.put("node-uuid", fault.getneId());
+                alarm.put("target-object", targetObject);
+
+                alarm.put("timestamp", fault.getTimeCreated());
+
+                List<Map<String, String>> additionalInfo = new ArrayList<>();
+                additionalInfo.add(Map.of("value-name", "AlarmID", "value", fault.getId()));
+                additionalInfo.add(Map.of("value-name", "Severity", "value", fault.getSeverity()));
+                additionalInfo.add(Map.of("value-name", "Type", "value", fault.getTypeId()));
+                additionalInfo.add(Map.of("value-name", "Text", "value", fault.getText()));
+                additionalInfo.add(Map.of("value-name", "Resource", "value", fault.getResource()));
+                alarm.put("additional-info", additionalInfo);
+
+                return alarm;
+            })
+            .collect(Collectors.toList());
+}
